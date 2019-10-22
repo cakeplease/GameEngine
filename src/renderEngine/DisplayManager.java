@@ -20,12 +20,18 @@ public class DisplayManager {
 		ContextAttribs attribs = new ContextAttribs(3,2).withForwardCompatible(true).withProfileCore(true);
 		
 		try {
+			
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), attribs);
+			Display.setTitle("Put something cool here");
+			
 		} catch (LWJGLException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
+	
 		
 		//tell OpenGL where in the display it can render the game (the whole display)
 		//bottom left (0,0) and top right (width, height) of the display in pixels
