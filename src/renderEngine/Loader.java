@@ -1,6 +1,8 @@
 package renderEngine;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -8,11 +10,16 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+
 /*
  * This class will deal with loading 3d model to memory by storing positional data about the model in a VAO
  */
 
 public class Loader {
+	
+	//keep track of all vbos and vaos
+	private List<Integer> vaos = new ArrayList<Integer>();
+	private List<Integer> vbos = new ArrayList<Integer>();
 
 	//method that will take in positions of the model's vertices, load data into VAO and return information about VAO as a RawModel object
 	public RawModel loadToVAO(float[] positions) {
@@ -22,11 +29,22 @@ public class Loader {
 		return new RawModel(vaoID, positions.length/3);
 	}
 	
+	//delete all vaos and vbos after closing the game
+	public void cleanUp() {
+		for(int vao:vaos) {
+			GL30.glDeleteVertexArrays(vao);
+		}
+		for(int vbo:vbos) {
+			GL15.glDeleteBuffers(vbo);
+		}
+	}
+	
 	//method to create a new empty VAO, returns ID of the VAO
 	private int createVAO() {
 		//create a VAO
 		int vaoID = GL30.glGenVertexArrays();
-		//active VAO
+		vaos.add(vaoID);
+		//activate VAO
 		GL30.glBindVertexArray(vaoID);
 		return vaoID;
 	}
@@ -34,6 +52,7 @@ public class Loader {
 	//method to store the data in one of the attribute lists of the VAO
 	private void storeDataInAttributeList(int attributeNumber, float[] data) {
 		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
 		
 		//convert data into a float buffer
@@ -52,6 +71,9 @@ public class Loader {
 			- 0 offset
 		*/
 		GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0);
+		
+		//unbind current VBO
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		
 	}
 	

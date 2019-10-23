@@ -8,7 +8,7 @@ package renderEngine;
 	-store the data into the VBO 
 	-create a VAO
 	-storing the VBO data into the attribute list of VAO 
-	-use the ID of the VAO to tell the OpenGl to render the VAO rectangle 
+	-use the ID of the VAO to tell the OpenGl to render the VAO rectangle
 */ 
 
 // This class will represent a 3d model stored in memory

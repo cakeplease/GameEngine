@@ -1,0 +1,84 @@
+VBO - vertex buffer object
+
+array of all kinds of data
+
+Create VBO:
+
+Creating a VBO requires 3 steps:
+
+1. Generate a new buffer object with glGenBuffers().
+2. Bind the buffer object with glBindBuffer().
+3. Copy vertex data to the buffer object with glBufferData().
+
+1. glGenBuffers()
+glGenBuffers() creates buffer objects and returns the IDs of the buffer objects.
+It requires 2 parameters: the first one is the number of buffer objects to create, and the second parameter 
+is the address of a GLuint variable or array to store a single ID or multiple IDs.
+
+GLuint = Unsigned binary integer 32 bit
+
+2. glBindBuffer()
+Once the buffer object has been created, we need to hook the buffer object with the corresponding ID before using the buffer object.
+glBindBuffer() takes 2 parameters: target and GLuint ID.
+
+Target is a hint to tell VBO whether this buffer object will store vertex array data or index array data:
+GL_ARRAY_BUFFER, or GL_ELEMENT_ARRAY_BUFFER. 
+Any vertex attributes, such as vertex coordinates, texture coordinates, normals and color component arrays should use GL_ARRAY_BUFFER. 
+Index array which is used for glDraw[Range]Elements() should be tied with GL_ELEMENT_ARRAY_BUFFER. 
+
+Once glBindBuffer() is first called, VBO initializes the buffer with a zero-sized memory buffer and set the initial VBO states, such as usage and access properties.
+
+
+3. glBufferData()
+You can copy the data into the buffer object with glBufferData() when the buffer has been initialized.
+
+To store data you have to convert them into a Floatbuffer first
+FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
+		buffer.put(data);
+		buffer.flip();
+		return buffer;
+
+usage: 
+GL_STATIC_DRAW
+GL_STATIC_READ
+GL_STATIC_COPY
+GL_DYNAMIC_DRAW
+GL_DYNAMIC_READ
+GL_DYNAMIC_COPY
+GL_STREAM_DRAW
+GL_STREAM_READ
+GL_STREAM_COPY
+
+
+"Static" means the data in VBO will not be changed (specified once and used many times), 
+"dynamic" means the data will be changed frequently (specified and used repeatedly), and 
+"stream" means the data will be changed every frame (specified once and used once). 
+"Draw" means the data will be sent to GPU in order to draw (application to GL),
+"read" means the data will be read by the client's application (GL to application), and 
+"copy" means the data will be used both drawing and reading (GL to GL).
+
+
+glDeleteBuffers()
+
+You can delete a single VBO or multiple VBOs with glDeleteBuffers() if they are not used anymore. After a buffer object is deleted, its contents will be lost.
+
+
+
+
+VAO - vertex arrays list
+object in which you can store data about a 3d model.
+It has a lot of slots in which you can store data called attribute lists.
+Each VAO has a ID.
+
+Creating VAO:
+
+1. glGenVertexArrays()
+2. glBindVertexArray()
+
+Unbinding:
+
+glBindVertexArray(0)
+
+
+
+
