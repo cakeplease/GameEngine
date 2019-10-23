@@ -64,7 +64,6 @@ You can delete a single VBO or multiple VBOs with glDeleteBuffers() if they are 
 
 
 
-
 VAO - vertex arrays list
 object in which you can store data about a 3d model.
 It has a lot of slots in which you can store data called attribute lists.
@@ -80,5 +79,37 @@ Unbinding:
 glBindVertexArray(0)
 
 
+SHADERS
 
+Writes in OpenGL shading language (GLSL)
+
+Shader programs: vertex shader and fragment shader
+
+Vertex shader - executes one time for each vertex in the object that is being rendered and
+each time it uses the vertex data we stored in the object's VAO as the input to the vertex shader program 
+
+Input to the vertex shader are the coordinates (x, y, z) of the vertex that was currently being processed
+
+We have to make Vertex shader do two things with this data:
+
+1. It has to determinate the position of where the vertex that it's processing should be rendered on to the screen 
+2. The vertex shader uses the input executes the program and outputs "something". This output is only used as inputs to the fragment shader so
+you choose what you need them to be  
+
+Fragment shader - executes one time for every pixel that the object covers on the screen.
+Each time it runs it uses the output of the vertex shader to calculate what the final color for that pixel should be,
+so the output of the fragment shader is always an RGB color, the color of the pixel that is being processed 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
