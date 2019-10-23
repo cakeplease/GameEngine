@@ -17,17 +17,18 @@ public class MainGameLoop {
 		Renderer renderer = new Renderer();
 		
 		float[] vertices = {
-			//left bottom triangle
-		   -0.5f, 0.5f, 0f,
-		   -0.5f, -0.5f, 0f,
-		    0.5f, -0.5f, 0f,
-		    //right top triangle
-		    0.5f, -0.5f, 0f,
-		    0.5f, 0.5f, 0f,
-		    -0.5f, 0.5f, 0f
+			-0.5f, 0.5f, 0,
+			-0.5f, -0.5f, 0,
+			0.5f, -0.5f, 0,
+			0.5f, 0.5f, 0
 		};
 		
-		RawModel model = loader.loadToVAO(vertices);
+		int[] indices = {
+				0,1,3, //top left triangle (v0, v1, v3)
+				3,1,2 //bottom right triangle (v3,v1,v2)
+		};
+		
+		RawModel model = loader.loadToVAO(vertices, indices);
 		
 		//check if user tries to exit display by clicking the cross
 		while(!Display.isCloseRequested()) {

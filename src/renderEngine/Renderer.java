@@ -13,23 +13,20 @@ public class Renderer {
 	}
 
 	public void render(RawModel model) {
+		
 		//every time you want to use a VAO you have to bind it
 		GL30.glBindVertexArray(model.getVaoID());
+		
 		//activate the attribute list where data is stored
 		//param is attribute list 0
 		GL20.glEnableVertexAttribArray(0);
 		
 		//render
-		
-		/*
-		 * 1. what we want to render (triangles)
-		 * 2. where in the data it should start rendering from
-		 * 3. how many vertices it should render
-		 * */
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getVertexCount());
+		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 		
 		//disable attribute list after using it
 		GL20.glDisableVertexAttribArray(0);
+		
 		//unbind VAO
 		GL30.glBindVertexArray(0);
 	}
