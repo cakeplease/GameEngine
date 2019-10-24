@@ -167,7 +167,7 @@ Then the vertex shader calculates the colour for each vertex based on the positi
 colour = vec3(position.x + 0.5, 1.0, position.y + 0.5), red, green and blue and produces colour outputs.
 
 The FRAGMENT shader executes for each pixel to decide what colour it should be.
-The input colour for each one of the fragment shader is the mix of output colours from the vertez shader.
+The input colour for each one of the fragment shader is the mix of output colours from the vertex shader.
 
 
 
