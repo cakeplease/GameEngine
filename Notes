@@ -79,11 +79,11 @@ Unbinding:
 glBindVertexArray(0)
 
 
-SHADERS
+SHADERS/shader programming!
 
 Writes in OpenGL shading language (GLSL)
 
-Shader programs: vertex shader and fragment shader
+Shader programs: vertex shader and fragment shader that works together to render a scene
 
 Vertex shader - executes one time for each vertex in the object that is being rendered and
 each time it uses the vertex data we stored in the object's VAO as the input to the vertex shader program 
@@ -104,12 +104,75 @@ so the output of the fragment shader is always an RGB color, the color of the pi
 
 
 
+vertex shader:
+
+//version of opengl
+#version 400 core
+
+//declare input, position of the vertex from VAO
+in vec3 position;
+
+//declare output, conversion of position to colour
+out vec3 colour;
+
+//the method that runs every time a vertex is processed by this vertex shader
+void main(void) {
+	
+	//tell OpenGL where to render this vertex on the screen
+	//you can also write position.xyz or just position
+	
+	gl_Position = vec4(position.x, position.y, position.z, 1.0);
+	
+	//create output colour
+	colour = vec3(position.x+0.5, 1.0, position.y+0.5);
+	
+}
+
+
+fragment shader:
+
+//version of OpenGL
+#version 400 core
+
+//declare input, it is the output from the vertex shader
+in vec3 colour;
+
+//the color of the pixel that is currently proccesing
+out vec4 out_Colour;
+
+void main(void) {
+
+	//convert input colour to the output colour
+	out_Colour = vec4(colour, 1.0);
+
+}
+
+
+Recap:
+
+We have a rectangle with four vertices:
+
+-0.5f, 0.5f, 0,
+-0.5f, -0.5f, 0,
+0.5f, -0.5f, 0,
+0.5f, 0.5f, 0
+
+They are stored in a attribute list in a VAO.
+
+The VERTEX shader has access to those positions in form of a vec3 position variable. 
+The vertex shader executes for each vertex and uses these input positions to first to tell the GPU where on the screen it should
+be rendered. We do this by setting gl_Position = vec4(position, 1.0)
+
+Then the vertex shader calculates the colour for each vertex based on the position of that vertex:
+colour = vec3(position.x + 0.5, 1.0, position.y + 0.5), red, green and blue and produces colour outputs.
+
+The FRAGMENT shader executes for each pixel to decide what colour it should be.
+The input colour for each one of the fragment shader is the mix of output colours from the vertez shader.
 
 
 
-
-
-
-
+ In the order to use those shader programs we need to be able to access those from java code (abstract class ShaderProgram) for all shader programs.
  
+ 
+
 
